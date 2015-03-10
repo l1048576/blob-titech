@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=1024, user-scalable=no">
+
+		<title>この冬はSKIで遊ぼう！ 新λ生に差をつける 関数型言語λ門</title>
+
+		<!-- Required stylesheet -->
+		<link rel="stylesheet" media="screen" href="core/deck.core.css">
+
+		<!-- Extension CSS files go here. Remove or add as needed. -->
+		<link rel="stylesheet" media="screen" href="extensions/goto/deck.goto.css">
+		<link rel="stylesheet" media="screen" href="extensions/menu/deck.menu.css">
+		<link rel="stylesheet" media="screen" href="extensions/navigation/deck.navigation.css">
+		<link rel="stylesheet" media="screen" href="extensions/status/deck.status.css">
+		<link rel="stylesheet" media="screen" href="extensions/scale/deck.scale.css">
+
+		<!-- Style theme. More available in /themes/style/ or create your own. -->
+		<!--<link rel="stylesheet" media="screen" href="themes/style/web-2.0.css">-->
+		<link rel="stylesheet" media="screen" href="themes/style/web-2.0.larry.css">
+
+		<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+		<link rel="stylesheet" media="screen" href="themes/transition/horizontal-slide.css">
+
+		<!-- Basic black and white print styles -->
+		<link rel="stylesheet" media="print" href="core/print.css">
+
+		<!-- Required Modernizr file -->
+		<script src="modernizr.custom.js"></script>
+
+		<!-- mathjax -->
+		<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<style>
+strong {
+	color:#900;
+}
+@font-face {
+	font-family: doulos;
+	src: url('fonts/DoulosSIL-R.woff');
+	/*
+		Doulos licenced under the SIL Open Font LIcense.
+		see http://www-01.sil.org/computing/catalog/show_software.asp?id=91 .
+	*/
+}
+.font-doulos {
+	font-family: doulos;
+}
+table {
+	border:1px solid #369;
+	border-collapse:collapse;
+	margin:0.5em auto;
+}
+table, tr, td, th {
+	border:1px solid #369;
+}
+table {
+	margin-bottom: 1em;
+}
+td, th {
+	padding:0.2em 0.3em;
+}
+p {
+	margin-bottom: 1em;
+	line-height:160%;
+}
+.border {
+	border: 1px solid #369;
+	padding:0.3em;
+}
+.underline {
+	text-decoration:underline;
+}
+		</style>
+	</head>
+	<body>
+		<div class="deck-container">
+
+			<!-- Begin slides. Just make elements with a class of slide. -->
+
+			<section class="slide">
+				<h2>
+					この冬はSKIで遊ぼう！<br />
+					新λ生に差をつける 関数型言語λ門
+				</h2>
+				<div style="margin: 0 auto;" id="temp0001">
+					<style>
+						#temp0001 iframe {
+							margin-left:auto !important;
+							margin-right:auto !important;
+							transform: scale(2.0);
+							transform-origin:center top;
+						}
+					</style>
+					<blockquote class="twitter-tweet" lang="ja"><p>「今年は関数型言語やりたいですね」<br />「なんで？」<br />「未年だけに、ラムダ」</p>&mdash; Hideyuki Tanaka (@tanakh) <a href="https://twitter.com/tanakh/status/552409139704774656">2015, 1月 6</a></blockquote>
+					<!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+				</div>
+			</section>
+
+			<section class="slide">
+				<h2>$ whoami</h2>
+				<div style="display:flex; margin:0 center">
+					<div style="margin: 1em">
+						<img src="images/L1048576-twitter_profile.png" alt="twitter" />
+					</div>
+					<div style="margin: 1em">
+						<img src="images/L16777216-twitter_profile.png" alt="twitter" />
+					</div>
+					<div style="margin: 1em">
+						<img src="images/nu11p0_6477-twitter_profile.png" alt="twitter" />
+					</div>
+				</div>
+				<ul>
+					<li>よくC++書いてる<ul>
+							<li>C++14いいねぇ</li>
+							<li>gcc-5.0はよ来い</li>
+							<li>C++17はよ来い</li>
+							<li>メタプログラミングも好き</li>
+					</ul></li>
+					<li>XML直打ち勢<ul>
+							<li>XHTML5, docbook5, MathML, RDF, ...</li>
+							<li>SVGやCOLLADAなどにも興味あり</li>
+					</ul></li>
+					<li>OpenGLわからんつらい<ul>
+							<li>ここ1年、三角と四角とティーポットしか表示してない</li>
+					</ul></li>
+					<li>SKIコンビネータ手書き勢</li>
+				</ul>
+			</section>
+
+			<section class="slide">
+				<img src="images/L1048576_icon.png" alt="icon" />
+			</section>
+			<section class="slide">
+				<img src="images/L1048576_icon_lambda.png" alt="icon" />
+			</section>
+			<section class="slide">
+				<img src="images/L1048576_icon_lambda_char_with_lines.png" alt="icon" />
+			</section>
+
+			<section class="slide">
+				<h1>話題: λ</h1>
+			</section>
+			<section class="slide">
+				<h2>話題: λ</h2>
+				<ul>
+					<li>「ラムダ」とは何か</li>
+					<li>関数型言語とはどのようなものか</li>
+					<li>“純粋関数型言語”は何がどう違うのか</li>
+				</ul>
+				<p style="border:1pt dotted blue; margin-top:3em">
+					<strong>注意:</strong><br />
+					あまり厳密な話はできないので、マサカリ投擲はほどほどにお願いします
+				</p>
+			</section>
+
+			<section class="slide">
+				<h2>関数と値</h2>
+				<ul>
+					<li class="slide">
+						<p>\( f(x) = 3x + 2  \)</p>
+						<p>なるほど、\(f\)は<span>\(x\)を受け取って\(3x+2\)を返す関数</span>なんだな</p>
+						<p class="slide">→関数</p>
+					</li>
+					<li class="slide">
+						<p>\( f(3) \)</p>
+						<p>関数fに値3を与えたときの値か……<br />\( 3 \times 3 + 2 \)だから11だな！</p>
+						<p class="slide">→値</p>
+					</li>
+					<li class="slide">
+						<p>\( g(a) \)</p>
+						<p class="slide">→値？関数？？</p>
+					</li>
+				</ul>
+				<p class="slide">
+				\( g(a) \) は<br />
+				「値aを受け取る関数g」<br />
+				と<br />
+				「関数gに値aを与えたときの値」<br />
+				とどちらなのか？
+				</p>
+			</section>
+			<section class="slide">
+				<h2>偉い人たちが考えた結果</h2>
+				<p>
+					「関数本体と、関数が受け取る引数と、関数に引数を渡したときの結果が全部区別できればいいんだよね？」
+				</p>
+				<table>
+					<tr>
+						<td>関数本体</td>
+						<td style="text-align:center">
+							\( &lambda;x . 3 \times x + 2 \)
+						</td>
+					</tr>
+					<tr>
+						<td>関数<span>\( &lambda;x . 3 \times x + 2 \)</span>が受け取る引数</td>
+						<td style="text-align:center">
+							<span>\( x \)</span>
+						</td>
+					</tr>
+					<tr>
+						<td>関数<span>\( &lambda;x . 3 \times x + 2 \)</span>に引数 \( a \)を渡したときの結果</td>
+						<td style="text-align:center">
+							<span>\( (&lambda;x . 3 \times x + 2) a \)</span>
+						</td>
+					</tr>
+				</table>
+				<ul class="slide">
+					<li>関数は
+						<div>\( &lambda; 引数として使う文字 . 式 \)</div>
+						の形式</li>
+					<li>関数適用は並べるだけ<ul>
+							<li>関数と、適用する引数の区別が付くように、(引数でなく)関数を括弧で括る</li>
+					</ul></li>
+				</ul>
+			</section>
+
+			<section class="slide">
+				<h2>区別できるようになった</h2>
+				<ul>
+					<li>
+						<p>\( f = (&lambda;x . 3x+2) \)</p>
+						<p>→fはxを受け取って3x+2を返す関数( &#x211d; &rarr; &#x211d; )</p>
+					</li>
+					<li>
+						<p>\( f \ 3 = (&lambda;x . 3x+2) \ 3 &rarr;_&beta; 11 \)</p>
+						<p>→f 3は引数(値)3に関数fを適用した結果(値)( &#x211d; )</p>
+					</li>
+					<li>
+						<p>\( g \ a \)</p>
+						<p>→g aは引数aに関数gを適用した結果</p>
+					</li>
+					<li>
+						<p>\( g = (&lambda;a . ??? ) \)</p>
+						<p>→gは引数aを受け取る関数</p>
+					</li>
+				</ul>
+				<p class="slide" style="font-weight:bold">
+					\( g(a) \) なんてものはなかった
+				</p>
+			</section>
+
+			<section class="slide">
+				<h2>&lambda;計算のルール</h2>
+				<h3>定義</h3>
+				<ol>
+					<li>
+						<p><strong>記号(identifier)</strong>は式</p>
+						<p>&lt;expr&gt; ::= &lt;identifier&gt;</p>
+						<p>\(a\)とか\(x\)とか。</p>
+					</li>
+					<li>
+						<p><strong>記号を受け取って式を返す関数</strong>も、式</p>
+						<p>&lt;expr&gt; ::= (&lambda;&lt;identifier&gt; . &lt;expr&gt;)</p>
+						<p>\( (&lambda;x . y \ x) \) ←こんなのとか。</p>
+					</li>
+					<li>
+						<p><strong>式に式を適用した結果</strong>も、式</p>
+						<p>&lt;expr&gt; ::= (&lt;expr&gt; &lt;expr&gt;)</p>
+						<p>\( y \ x \) とか、 \( (&lambda;x . y \ x) \ a \) とか。</p>
+						<p>ちなみに関数適用は左結合。 \( x y z = (x y) z \)</p>
+					</li>
+				</ol>
+				<div class="slide">
+					<h3>計算手順(&beta;簡約)</h3>
+					<ol>
+						<li>
+							<p>仮引数の文字を、(括弧で括った)実際の引数で置換する。</p>
+							<p>\( ((\lambda V.E) \ E') &rarr;_\beta E[V:=E'] \)</p>
+							<p>
+							たとえば \( (&lambda;x . x+3) \ 5 \) なら、\(x\)に5を入れて\((5)+3\)。<br />
+							\( (&lambda;x . x \ 2) \ (y \ 3) \) なら、\(x\)に \( y \ 3 \)を入れて\( (y \ 3) \ 2 \)。
+							</p>
+						</li>
+						<li>くりかえす。</li>
+						<li>これ以上適用できなくなったら終わり。</li>
+					</ol>
+					<br />
+					<p>実際には利用する文字が重複したら別のを利用する(&alpha;変換)とかの処理が入る(大したことないので紹介は省略)。</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>何がすごいの？</h2>
+				<ul>
+					<li class="slide">
+						&lambda;計算はチューリング完全<br />
+						もちろん条件分岐やループや再帰が書ける
+					</li>
+					<li class="slide">
+						計算が文字列の置換<strong>だけ</strong>で行える<br />
+						"意味"などは不要。機械的に計算。
+					</li>
+					<li class="slide">
+						計算に使う定義やルールがとても少ない(&alpha;変換、&beta;簡約、&eta;変換の3つくらいしかない)。<br />
+						しかも外部に事前に用意しておく必要のある定数などが存在しない
+					</li>
+					<li class="slide">
+						<p>「<strong>関数を受け取って</strong>関数を返すような関数」(<strong>高階関数</strong>)なども自然に記述できる。</p>
+						<p>
+							たとえば身近なものだと、
+						</p>
+						<ul>
+							<li>
+								微分演算子: (&#x211d; &rarr; &#x211d;) &rarr; (&#x211d; &rarr; &#x211d;)
+							</li>
+							<li>
+								多項式の次数: (&#x211d; &rarr; &#x211d;) &rarr; &#x2115;
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<p class="slide">
+					機械的な処理だけでチューリング完全な計算を遂行できる"コンピュータっぽさ"を持ちつつ、
+					具体的なコンピュータの実装を感じさせない抽象性<br />
+					<span>→「<strong>CPUの声が聞こえない</strong>」</span>
+				</p>
+			</section>
+			<section class="slide">
+				<h2>「関数を返す関数」</h2>
+				<p>
+					「実数\(x\)を受け取り、「実数\(y\)を受け取り、\(x+y\)を返す関数」が作りたい！」
+				</p>
+				<div class="slide">
+					<table>
+						<tr>
+							<td>実数\(y\)を受け取り、\(x+y\)を返す関数\(f\)</td>
+							<td>
+								\( (&lambda;y . x + y ) \)
+							</td>
+						</tr>
+						<tr>
+							<td>実数\(x\)を受け取り、「<strong>実数\(y\)を受け取り、\(x+y\)を返す関数</strong>」を返す関数\(g\)</td>
+							<td>
+								\( (&lambda;x . \)<strong>\( (&lambda;y . x + y ) \)</strong>\( ) \)
+							</td>
+						</tr>
+					</table>
+					<div class="slide">
+						<p>
+							<strong>多変数関数</strong>の定義としては\(g\)みたいなのが使えそう！<br />
+							\( g \ 3 \ 2 &rarr; (&lambda;y . 3 + y) 2 &rarr; 3 + 2 \)
+						</p>
+						<div class="slide">
+							<h3>省略記法</h3>
+							<p>
+								\( (&lambda;x . (&lambda;y . &lt;expr&gt;)) \)<br />
+								を<br />
+								\( (&lambda;x . &lambda;y . &lt;expr&gt;) \)<br />
+								とか<br />
+								\( (&lambda;x \ y . &lt;expr&gt;) \)<br />
+								\( (&lambda;xy . &lt;expr&gt;) \)<br />
+								と書いてよいこととする。
+							</p>
+							<p>
+								\( g = (&lambda;x \ y . x + y) \)
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>関数の型</h2>
+				<p>
+					\( g = (&lambda;x \ y . x + y) \)
+				</p>
+				<p>
+					数学っぽく書くなら<br />
+					\( g : (&#x211d; \times &#x211d;) &rarr; &#x211d; \)
+				</p>
+				<div class="slide">
+					<p>&lambda;による表記の方を見てみると……</p>
+					<p>
+						\( g = (&lambda;x . (&lambda;y . x + y)) \)
+					</p>
+					<table>
+						<tr>
+							<td>\(g\)は</td>
+							<td>実数\(x\)</td>
+							<td>を受け取って</td>
+							<td>(</td>
+							<td>実数\(y\)</td>
+							<td>を受け取って</td>
+							<td>実数を返す関数</td>
+							<td>)を返す関数</td>
+						</tr>
+						<tr>
+							<td>\(g : \)</td>
+							<td>\( &#x211d; \)</td>
+							<td>\( &rarr; \)</td>
+							<td>\( ( \)</td>
+							<td>\( &#x211d; \)</td>
+							<td>\( &rarr; \)</td>
+							<td>\( &#x211d; \)</td>
+							<td>\( ) \)</td>
+						</tr>
+					</table>
+					<p>
+						<strong>\( g : &#x211d; &rarr; (&#x211d; &rarr; &#x211d;) \)</strong>
+					</p>
+					<div class="slide">
+						<p>一方で……</p>
+						<p>
+							\( g = (&lambda;x \ y . x + y) \)
+						</p>
+						<table>
+							<tr>
+								<td>\(g\)は</td>
+								<td>実数\(x\)</td>
+								<td>を受け取って</td>
+								<td>実数\(y\)</td>
+								<td>を受け取って</td>
+								<td>実数を返す関数</td>
+							</tr>
+							<tr>
+								<td>\( g : \)</td>
+								<td>\( &#x211d; \)</td>
+								<td>\( &rarr; \)</td>
+								<td>\( &#x211d; \)</td>
+								<td>\( &rarr; \)</td>
+								<td>\( &#x211d; \)</td>
+							</tr>
+						</table>
+						<p>
+							<strong>\( g : &#x211d; &rarr; &#x211d; &rarr; &#x211d; \)</strong>
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>カリー化(currying)</h2>
+				<p>
+					「<strong>\( &#x211d; &rarr; (&#x211d; &rarr; &#x211d;) \)</strong>」
+					と
+					「<strong>\( &#x211d; &rarr; &#x211d; &rarr; &#x211d; \)</strong>」
+					は同じだったんや……！<br />
+					→「→」を右結合として見れば、単なる括弧の省略に過ぎない
+				</p>
+				<div class="slide">
+					<p>
+						とはいえ、\( g(x, y) : (&#x211d; \times &#x211d;) &rarr; &#x211d; \)について<br />
+						「<strong>\( g(x) \) は『実数\(y\)を受け取ってx+yを返す関数』だ！</strong>」<br />
+						と主張するのも違和感がある……<br />
+						(というか常識的に考えて変)
+					</p>
+					<div class="slide">
+						<h3>そこで</h3>
+						<p>
+							多変数関数を、「「「関数を返す関数」を返す関数」を返す……」という形式に置き換える<br />
+							( \( (&#x211d; \times &#x211d;) &rarr; &#x211d; \)
+							を
+							\( &#x211d; &rarr; (&#x211d; &rarr; &#x211d;) \)
+							に変換する)<br />
+							ことを、「<strong>カリー化</strong>」という。
+						</p>
+						<p>
+							また、引数の一部だけを指定することを「部分適用」という。
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>カリー化の例</h2>
+				<p>
+					全ての関数をデフォルトでカリー化してしまうHaskellでの様子をご覧ください。
+					<img src="ghci-currying.png" alt="" />
+				</p>
+				<ul>
+					<li>
+						<ul>
+							<li>\( g(x, y) = x+y \)</li>
+							<li>\( g2 = (&lambda;x . (&lambda;y . x+y)) \)</li>
+							<li>\( g3 = (&lambda;x \ y . (x+y)) \)</li>
+						</ul>
+						いずれも全く同じ型(<code>数 &rarr; 数 &rarr; 数</code>)
+					</li>
+					<li>
+						<code>let h x = (3 +)</code><br />
+						これは数学っぽく見るとおかしいが、Haskellでは「+」もカリー化されていて<br />
+						\( + : Num &rarr; Num &rarr; Num \)<br />
+						なので、単なる部分適用。
+					</li>
+				</ul>
+			</section>
+			<section class="slide">
+				<h2>余談: カリーって何さ</h2>
+				<h3>Haskell Brooks Curry (1900-1982)</h3>
+				<p>
+					アメリカの数学者、論理学者。
+					1982年に一度人間をやめるも、100年の時を経て日本で再び「擬人化」されることとなる。
+					<img src="haskell-human-again.png" alt="" />
+				</p>
+			</section>
+			<section class="slide">
+				<h2>余談: uncurrying</h2>
+				<p>カリー化の反対の操作、<strong>uncurrying</strong>(非カリー化)も存在する。</p>
+				<div class="slide">
+					<p>第六駆逐隊による<strong>currying</strong>の様子。</p>
+					<div style="display:flex; margin:0 center">
+						<img src="6-currying0.png" alt="" style="width:48%" />
+						<img src="6-currying1.png" alt="" style="width:48%" />
+					</div>
+					<br />
+					<p>第六駆逐隊による<strong>uncurrying</strong>の様子。</p>
+					<div style="display:flex; margin:0 center">
+						<img src="6-uncurrying1.png" alt="" style="width:32%" />
+						<img src="6-uncurrying2.png" alt="" style="width:32%" />
+						<img src="6-uncurrying3.png" alt="" style="width:32%" />
+					</div>
+				</div>
+				<br />
+				<p>
+					<small>出典: <a href="http://kancolle-anime.jp/story/?page=story6">アニメ「艦隊これくしょん -艦これ-」 第6話</a></small>
+				</p>
+			</section>
+
+			<section class="slide">
+				<h1>「&lambda;計算はチューリング完全」</h1>
+				<h2>&lambda;の万能性を見ていこう</h2>
+			</section>
+			<section class="slide">
+				<h2>「&lambda;計算はチューリング完全」</h2>
+				<p>
+					今までに使ってた例:<br />
+					\( (&lambda;x . 3 \times x + 2) \)<br />
+				</p>
+				<p class="slide">
+					↑&lambda;計算のルール以外のやつ(×、＋)使ってるじゃん<br />
+				</p>
+				<br />
+				<div class="slide">
+					<p>
+						&lambda;計算のルールだけで計算するなら、「自然数」や「加減算」なども、全て記号(identifier)と関数だけで表現できる必要がある。
+					</p>
+					<p>
+						更に、実用的にプログラミングしたいなら「データ構造」や条件分岐、ループなども関数だけで表現できる必要がある。
+					</p>
+				</div>
+				<div class="slide">
+					<h3>とりあえずの目標</h3>
+					<ul>
+						<li>自然数を表現したい</li>
+						<li>加減算や乗算を表現したい</li>
+						<li>データ構造を表現したい</li>
+						<li>繰り返し、再帰を表現したい</li>
+					</ul>
+					<p>このくらいできれば、まあ実用的なプログラム書けそう</p>
+				</div>
+			</section>
+
+			<section class="slide">
+				<h2>&lambda;で自然数</h2>
+				<h3>Church numerals</h3>
+				<p>
+					Alonzo Church: めっちゃすごい人(Wikipedia見て)<br />
+				</p>
+				<p>
+					自然数nを<br />
+					\( (&lambda;f \ &lambda;x . \)<strong>\(f^n \ x\)</strong>\( ) \)<br />
+					すなわち、「fとxを受け取って、<strong>xにfをn回適用したものを返す関数</strong>」と定義した。
+				</p>
+				<ul>
+					<li>\( 0 := (&lambda;fx . x) \) ← fを0回適用</li>
+					<li>\( 1 := (&lambda;fx . f \ x) \) ← fを1回適用</li>
+					<li>\( 2 := (&lambda;fx . f \ (f \ x)) \) ← fを2回適用</li>
+					<li>\( 3 := (&lambda;fx . f \ (f \ (f \ x))) \) ← fを3回適用</li>
+					<li>…</li>
+				</ul>
+				<p>
+					たとえば
+					\( 3 \ g \ y &rarr;_&beta; g \ (g \ (g \ y)) \)
+				</p>
+				<div class="slide">
+					<p>自然数を「回数」で表現した→とてもシンプル</p>
+					<p>
+						しかも、「<strong>n回繰り返し</strong>」も実装できた！
+					</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>&lambda;で加算、乗算(1)</h2>
+				<h3>「後続数」(successor)を作る</h3>
+				<p>
+					\(SUCC \ n &rarr;_&beta; n+1 \) になってほしい<br />
+					SUCC: nを受け取り、「fとxを受け取り、xにfを<strong>n+1回</strong>適用したものを返す関数」を返す関数
+				</p>
+				<div class="slide">
+					<p>
+						「n+1回適用」→「n回適用したやつに、さらに1回だけ適用すればよくね？」<br />
+						<span class="border">\( SUCC = (&lambda;n . (&lambda;fx . f \  (n \ f \ x))) \)</span><br />
+						「\( n \ f \ x \)」が「n回適用したやつ」<br />
+						「\( f \ (n \ f \ x ) \)」が「さらに1回(=合計n+1回)適用したもの」
+					</p>
+					<div class="slide">
+						<p>
+							「1回だけ適用したやつに、追加でn回適用」と考えても良い。<br />
+							<span class="border">\( SUCC = (&lambda;n . (&lambda;fx . n \ f \ (f \ x))) \)</span><br />
+							同じ挙動でも、複数の実装が有り得る
+						</p>
+						<p class="slide">
+						<strong>めっちゃ簡単</strong>
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>&lambda;で加算、乗算(2)</h2>
+				<h3>加算</h3>
+				<p>
+					「fをxにm回適用したやつ」(つまりn)に「さらにfをn回適用」すれば、
+					「fをxにm+n回適用したやつ」が出てくる。<br />
+					\( PLUS = (&lambda;mnfx . n \ f \ (m \ f \ x)) \)
+				</p>
+				<div class="slide">
+					<p>
+						実際にやってみると……<br />
+						\( PLUS \ 3 \ 2 \ f \ x \)<br />
+						\( &rarr;_&beta; (&lambda;mnfx . n \ f \ (m \ f \ x)) \ 3 \ 2 \ f \ x \)
+						<br />
+						(仮引数mを3に置換)<br />
+						\( &rarr;_&beta; (&lambda;nfx . 3 \ f \ (m \ f \ x)) \ 2 \ f \ x \)
+						<br />
+						(仮引数nを2に置換)<br />
+						\( &rarr;_&beta; (&lambda;fx . 3 \ f \ (2 \ f \ x)) \ f \ x \)
+						<br />
+						(仮引数f(内側)をf(外側)で置換)<br />
+						\( &rarr;_&beta; (&lambda;x . 3 \ f \ (2 \ f \ x)) \ x \)
+						<br />
+						(仮引数x(内側)をx(外側)で置換)<br />
+						\( &rarr;_&beta; 3 \ f \ (2 \ f \ x) \)
+						<br />
+						(\(2 \ f \ x\)を先に計算)<br />
+						\( &rarr;_&beta; 3 \ f \ (f \ (f \ x)) \)
+						<br />
+						(残る \( 3 \ f \ A \)の部分を計算)<br />
+						\( &rarr;_&beta; f \ (f \ (f \ (f \ (f \ x)))) \)
+					</p>
+					<p>どうせこんな簡単な例は重要ではないので暇なときにでもやってみてください</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>&lambda;で加算、乗算(3)</h2>
+				<h3>乗算</h3>
+				<p>
+					「fをm回適用」をn回適用すれば、fを合計m&times;n回適用したことになるよね！<br />
+					\( MULT = (&lambda;mnfx . n \ (m \ f) \ x) \)
+				</p>
+				<p>
+					<small>特段面白いわけでもないので例は略</small>
+				</p>
+				<p class="slide">
+					<strong>何かの罠かと思うほど簡単</strong>
+				</p>
+			</section>
+			<section class="slide">
+				<h2>減算、の前に……</h2>
+				<p>
+					単純に考えれば、たとえば\(3-1\)は<br />
+					\( f \ (f \ (f \ x)) \)を\( f \ (f \ x) \)にする→「fをはがす処理」になる<br />
+				</p>
+				<div class="slide">
+					<p>
+						\(1-1\)で考えてみると……<br />
+						\( (-1) \ f \ (f \ x) &rarr;_&beta; x \)<br />
+						→\((-1) \ f\)は<strong>\(f\)の逆関数</strong>！？<br />
+					</p>
+					<div class="slide">
+						<p>
+							「外側の関数をはがす」は「逆関数を適用」になる。<br />
+							そんなのもちろん多くの場合無理だしつらいので、別のアプローチをとる。<br />
+							<strong>「リスト [ 0, 0, 1, 2, 3, 4, ... ] のn番目の要素を取ってくれば、n-1が出てくる」</strong><br />
+							→「リストを結合する」「無限リストを生成する」「n番目の要素を取る」等が必要<br />
+						</p>
+						<p class="slide">先にデータ構造と再帰を手に入れます</p>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>データ構造: ペア(consセル)</h2>
+				<p>
+					要件:<br />
+					\( FIRST \ (PAIR \ x \ y) &rarr;_&beta; x \)<br />
+					\( SECOND \ (PAIR \ x \ y) &rarr;_&beta; y \)<br />
+					↑先述の通り、PAIRを「はがす」のは無理
+				</p>
+				<div class="slide">
+					<p>
+						逆転の発想:「FIRSTを前に置いて駄目なら、<strong>後ろに置けば</strong>いいじゃん」<br />
+						\( (PAIR \ x \ y) \ FIRST &rarr;_&beta; x \)<br />
+						\( (PAIR \ x \ y) \ SECOND &rarr;_&beta; y \)<br />
+						→なんか出来そう
+					</p>
+					<div class="slide">
+						<h3>実際できる。</h3>
+						<p>
+							\( PAIR := (&lambda;ab . (&lambda;c . c \ a \ b)) \)<br />
+							とすると、<br />
+							\( PAIR \ a \ b \ FIRST &rarr;_&beta; FIRST \ a \ b &rarr;_&beta; a \)<br />
+							\( PAIR \ a \ b \ SECOND &rarr;_&beta; SECOND \ a \ b &rarr;_&beta; b \)<br />
+						</p>
+						<div class="slide">
+							<p>
+								どう見ても<br />
+								<strong>\( FIRST = (&lambda;ab . a) \)</strong><br />
+								<strong>\( SECOND = (&lambda;ab . b) \)</strong><br />
+								です、本当にありがとうございました
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>実はこれだけで十分だったりする</h2>
+				<p>
+					ペアがあれば二分木が作れる。<br />
+					二分木があればリストが作れる！
+				</p>
+				<p>
+					二分木でリスト[A, B, C, D]を表現する例:
+					<img src="cons-list.png" alt="" /><br />
+					LISPもHaskellも「リスト」はこの形式で実装されている。
+				</p>
+				<div class="slide">
+					<h3>cons</h3>
+					<p>
+						LISP等ではPAIRを<strong>cons</strong>、FIRSTを<strong>car</strong>、SECONDを<strong>cdr</strong>という。<br />
+						ちなみにcarは
+						<span>Contents of the Address part of Register number</span>、
+						cdrは
+						<span>Contents of the Decrement part of Register number</span>らしい。<br />
+						<small>(詳細は<a href="http://en.wikipedia.org/wiki/CAR_and_CDR">wikipedia</a>参照)</small>
+					</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>リストとしての使い方</h2>
+				<p>
+					l=[A, B, C, D] すなわち <strong>l = (cons A (cons B (cons C (cons D ゴミ))))</strong> の図:
+					<img src="cons-list.png" alt="" /><br />
+					(ゴミは何でもいい。Schemeとかだと'()、Haskellだと[]というのを入れたりする)
+				</p>
+				<div class="slide">
+					<p>
+						<ul>
+							<li>
+								A: (car l) &rarr; A
+							</li>
+							<li>
+								B: (car <span class="underline">(cdr l)</span>) &rarr; (car (cons B (cons C (cons D ゴミ)))) &rarr; B
+							</li>
+							<li>
+								C: (car (cdr <span class="underline">(cdr l)</span>))
+								&rarr; (car <span class="underline">(cdr (cons B (cons C (cons D ゴミ))))</span>)<br />
+								&rarr; (car (cons C (cons D ゴミ))) &rarr; C
+							</li>
+							<li>……</li>
+						</ul>
+					</p>
+					<div class="slide">
+						<p>
+							「<strong>n回cdrを適用したやつにcarを適用すれば、n番目の要素を取り出せる</strong>」(nは自然数)(0は自然数)<br />
+							\( NTH \ n \ l &rarr; l \ CDR \ CDR \ \cdots \ CDR \ CAR \)<br />
+							\( NTH := (&lambda;nl . n \ (&lambda;x . x \ CDR) \ l \ CAR) \)<br />
+							(「\( (&lambda;x . x \ CDR) \)」は、「受け取った引数にCDRを適用する」関数)
+						</p>
+						<p></p>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>おぼえかた</h2>
+				<img src="mwl_manga.jpg" alt="" style="width:50%;" />
+				<a href="http://lambda.bugyo.tk/cdr/mwl03/mwl03.html">マンガで分かるLisp (Section 1.2) より</a>
+			</section>
+			<section class="slide">
+				<h2>条件分岐</h2>
+				<p>
+					条件分岐もconsを使って実装できることに、お気付きだろうか……？
+				</p>
+				<p>
+					\( IFTHENELSE := CONS \)<br />
+					\( TRUE := CAR \)<br />
+					\( FALSE := CDR \)<br />
+				</p>
+				<div class="slide">
+					<p>
+						……するとこうなる。<br />
+						\( (IFTHENELSE \ a \ b) \ TRUE &rarr;_&beta; (CONS \ a \ b) \ CAR \)<br />
+						\( &rarr;_&beta; CAR \ a \ b &rarr;_&beta; a \)<br />
+						\( (IFTHENELSE \ a \ b) \ FALSE &rarr;_&beta; (CONS \ a \ b) \ CDR \)<br />
+						\( &rarr;_&beta; CDR \ a \ b &rarr;_&beta; b \)
+					</p>
+					<p class="slide">\( FALSE = 0 = (&lambda;ab . b) \)になるオマケつき</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>論理演算(AND, OR, NOT)</h2>
+				<p>
+					AND x y: 「xがTRUEならyの値、xがFALSEならFALSEを返す」<br />
+					→素直に実装すればおｋ<br />
+					\( AND := (&lambda;xy . (IFTHENELSE \ y \ FALSE) \ x) \)<br />
+					→簡約できるので簡約すると、こうなる:<br />
+					\( AND := (&lambda;xy . x \ y \ FALSE) = (&lambda;xy . x \ y \ (&lambda;ab . b)) \)
+				</p>
+				<div class="slide">
+					<p>
+						同じ調子でORも。<br />
+						OR x y: 「xがTRUEならTRUE、xがFALSEならyの値を返す」<br />
+						\( OR := (&lambda;xy . x \ TRUE \ y) = (&lambda;xy . x \ (&lambda;ab . a) \ y) \)
+					</p>
+					<div class="slide">
+						<p>
+							NOTは1引数なのでもっと簡単。<br />
+							NOT x: 「xがFALSEならTRUE、xがTRUEならFALSEを返す」<br />
+							\( NOT := (&lambda;x . x \ FALSE \ TRUE) = (&lambda;x . x \ (&lambda;ab . b) \ (&lambda;ab . a)) \)
+						</p>
+						<div class="slide">
+							<h3>せっかくなので例のアレも</h3>
+							<p>
+								\( NAND := (&lambda;xy . (NOT \ (AND \ x \ y))) \)<br />
+								ハイ<strong>NAND</strong>できたよ！！&lambda;計算は†すごい†ね！！！<br />
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>再帰(1)</h2>
+				<p>
+					&lambda;計算では「無名再帰」ができる！<br />
+					→名前の付いていない関数を再帰させることができる
+				</p>
+				<div>
+					<p>たとえば階乗</p>
+					<pre><code>(define (isZero num) (= num 0))
+; Schemeでの階乗
+(define (fact num)
+  (if (isZero num)
+    ; num=0なら 0!=1
+    1
+    ; num≠0なら num * fact(num-1)
+    (* num (fact (- num 1))) ; ←「fact」という名前が必要！
+  )
+)</code></pre>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>再帰(2)</h2>
+				<pre><code>(define (isZero num) (= num 0))
+; Schemeでの階乗
+(define (fact num)
+  (if (isZero num)
+    ; num=0なら 0!=1
+    1
+    ; num≠0なら num * fact(num-1)
+    (* num (fact (- num 1))) ; ←「fact」という、自分自身の名前が必要！
+  )
+)</code></pre>
+				<p>これを……</p>
+				<div class="slide">
+					<p>こう。</p>
+					<pre><code>(define (isZero num) (= num 0))
+; 再帰用の関数
+(define (pass-self fun arg) (fun fun arg))
+; Schemeでの階乗の計算本体
+(define (fact-body fun num)
+  (if (isZero num)
+    ; num=0なら 0!=1
+    1
+    ; num≠0なら num * fact(num-1)
+    (* num (fun (- num 1))) ; ←「fun」は引数
+  )
+)
+(define (fact2 num) (pass-self fact-body num))
+; (fact2 2) =&gt; (fact-body fact-body 2)
+; ↑fact-bodyの仮引数「fun」もfact-body自身になる</code></pre>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>再帰(3)</h2>
+				<h3>&lambda;で書く。</h3>
+				<pre><code>(define (pass-self fun arg) (fun fun arg))
+(define (fact-body fun num)
+  (if (isZero num) 1
+    (* num (fun (- num 1))) ; ←「fun」は引数
+  ))
+(define (fact2 num) (pass-self fact-body num))</code></pre>
+				<p>
+					PASSSELFは「(適用したい)関数と整数を受け取る」関数、<br />
+					FACTBODYは「(自分自身と等価な)関数と整数を受け取る」関数。
+				</p>
+				<p>
+					\( PASSSELF := (&lambda;fx . f \ f \ x) \)<br />
+					\( FACTBODY := (&lambda;fx . (ISZERO \ x) \ 1 \ (MULT \ x \ (f \ (PRED \ x)))) \)<br />
+				</p>
+				<p class="slide">
+					せつめい:<br />
+					\( FACTBODY := (&lambda;fx . \)<br />
+					<small>FACTBODYは、関数\(f\)(階乗する関数)と数\(x\)を受け取り、</small><br />
+					\( (isZero \ x) \ 1 \)<br />
+					<small>\(x\)が0なら1、そうでなければ……</small><br />
+					\((MULT \ x \ \)<span style="color:green">\( (f \ (PRED \ x)) \)</span>\( ) \)<br />
+					<small>\(x\)と「<span style="color:green">x-1の階乗</span>」の積を返す。</small><br />
+					(なお \(PRED\) はpredecessor、先行の数。SUCCの反対。)
+				</p>
+			</section>
+			<section class="slide">
+				<h2>無名再帰ができた</h2>
+				<p>
+					\( FACT2 := (&lambda;fx . f \ f \ x) \ (&lambda;fx . (ISZERO \ x) \ 1 \ (MULT \ x \ (f \ (PRED \ x)))) \)<br />
+					FACT2の定義内でFACT2という名前を使っていないことに注目。<br />
+					(&beta;簡約できるけど、ここでは省略)
+				</p>
+				<p>
+					あとは、\(ISZERO\)と\(PRED\)ができればおｋ！
+				</p>
+				<div class="slide">
+					<h3>ISZERO</h3>
+					<p>
+						ISZEROは、「一度でも適用してしまうとFALSEになる」関数(つまり「AND FALSE」を、n回TRUEに適用してやればいい。<br />
+						<ul>
+							<li>
+								0回: TRUE
+							</li>
+							<li>
+								1回: (AND FALSE) TRUE &rarr; FALSE
+							</li>
+							<li>
+								2回: (AND FALSE) ((AND FALSE) TRUE) &rarr; FALSE
+							</li>
+							<li>
+								3回: (AND FALSE) ((AND FALSE) ((AND FALSE) TRUE)) &rarr; FALSE
+							</li>
+							<li>……</li>
+						</ul>
+						<div class="slide">
+							<p>素直に実装。</p>
+							<p>
+								\( ISZERO := (&lambda;n . n \ (AND FALSE) \ TRUE) \)<br />
+								簡約できる。<br />
+								\( ISZERO := (&lambda;n . n \ (&lambda;x . FALSE) \ TRUE) \)<br />
+							</p>
+							<div class="slide">
+								<p>
+									↑「引数を無視して問答無用でFALSEにしてしまう関数」をn回適用する、という見方ができる。
+								</p>
+								<p class="slide">
+									あとは<strong>\(PRED\)</strong>が実装できれば、階乗が実装できたことになる！
+								</p>
+							</div>
+						</div>
+					</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>PRED</h2>
+				<p>
+					<a href="http://dic.nicovideo.jp/a/%E6%80%9D%E3%81%84...%E5%87%BA%E3%81%97%E3%81%9F!">思い…出した！</a><br />
+					「<strong>リスト [ 0, 0, 1, 2, 3, 4, ... ] のn番目の要素を取ってくれば、n-1が出てくる</strong>」<br />
+					\( PRED := (&lambda;n . NTH \ n \ (CONS \ 0 \ (IOTA \ 0))) \)<br />
+					ここで、\(IOTA \ n\)は無限リスト[n, n+1, n+2, ...]を返す関数。
+				</p>
+				<div class="section">
+					<h3>IOTAの実装</h3>
+					<p>
+						\( PASSSELF := (&lambda;fx . f \ f \ x) \)<br />
+						\( FACTBODY := (&lambda;fx . (ISZERO \ x) \ 1 \ (MULT \ x \ (f \ (PRED \ x)))) \)<br />
+						\( FACT2 := (&lambda;fx . f \ f \ x) \ (&lambda;fx . (ISZERO \ x) \ 1 \ (MULT \ x \ (f \ (PRED \ x)))) \)<br />
+						階乗を思い出して……
+					</p>
+					<p>
+						条件分岐が無い(無限リストだから)分、ちょっと単純。
+						\( IOTABODY := (&lambda;fx . (CONS \ x \ (f \ (SUCC \ x)))) \)
+						\( IOTA := (&lambda;n . PASSSELF \ IOTABODY \ n) \)
+					</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>PRED</h2>
+				<p>
+					\( IOTA := (&lambda;fx . f \ f \ x) \ (&lambda;fx . (CONS \ x \ (f \ (SUCC \ x)))) \)<br />
+					\( = (&lambda;fx . f \ f \ x) \ (&lambda;fx . (&lambda;c . c \ x \ (f \ (&lambda;gy . g \ (x \ g \ y))))) \)<br />
+					\( IOTA \ 0 = (&lambda;f . f \ f \ (&lambda;gx . x)) \ (&lambda;fx . (&lambda;c . c \ x \ (f \ (&lambda;gy . g \ (x \ g \ y))))) \)
+				</p>
+				<p>
+					\( PRED := (&lambda;n . NTH \ n \ (CONS \ 0 \ (IOTA \ 0))) \)<br />
+					\( = (&lambda;n . (&lambda;\)<span style="color:green">\(m\)</span><span style="color:red">\(l\)</span>\(. m \ (&lambda;x . x \ (&lambda;ab . b)) \ l \ (&lambda;ab . a))\) <span style="color:green">n</span> <span style="color:red">\(((&lambda;abc . c \ a \ b) \ 0 \ (IOTA \ 0))\)</span>) \)<br />
+					\( = (&lambda;n . n \ (&lambda;x . x \ (&lambda;ab . b)) \ ((&lambda;abc . c \ a \ b) \ 0 \ (IOTA \ 0)) \ (&lambda;ab . a)) \)<br />
+					\( = (&lambda;n . n \ (&lambda;x . x \ (&lambda;ab . b)) \ (&lambda;c . c \ 0 \ (IOTA \ 0)) \ (&lambda;ab . a)) \)<br />
+					\( = (&lambda;n . n \ (&lambda;x . x \ (&lambda;ab . b)) \ (&lambda;c . c \ (&lambda;fx . x) \ (&lambda;f . f \ f \ (&lambda;gx . x)) \ (&lambda;fx . (&lambda;c . c \ x \ (f \ (&lambda;gy . g \ (x \ g \ y)))))) \ (&lambda;ab . a)) \)
+				</p>
+				<div class="slide">
+					<p>
+						……というわけで、「-1」できるようになった。<br />
+						あとはSUCCからPLUSを作ったのと同じ要領でMINUSを作ろう！(詳細は略)
+					</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>補足:マシなやり方</h2>
+				<h3>たんじゅんな人の考えたPRED</h3>
+				<p>
+					\( PRED := (&lambda;n . n \ (&lambda;x . x \ 0) \ (&lambda;c . c \ 0 \ (&lambda;f . f \ f \ 0) \ (&lambda;fx . (&lambda;c . c \ x \ (f \ (SUCC \ x))))) \ (&lambda;ab . a)) \)
+				</p>
+				<h3>頭のいい人の考えたPRED</h3>
+				<p>
+					\( PRED := (&lambda;n . n (&lambda;gk . (g \ 1) \ (&lambda;u . SUCC \ (g \ k)) \ k) \ (&lambda;v . 0) \ 0) \)<br />
+				</p>
+				<!-- めんどくさくなった -->
+				<!--<div class="slide">-->
+					<!--<h3>解読</h3>-->
+					<!--<p>-->
+						<!--\( HOGE := (&lambda;gk . (g \ 1) \ (&lambda;u . SUCC \ (g \ k)) \ k) \)<br />-->
+						<!--とすると、-->
+						<!--\( PRED := (&lambda;n . n \ HOGE \ (&lambda;v . 0) \ 0) \)<br />-->
+						<!--「HOGEをn回 \( (&lambda;v . 0) \) に適用し、その結果に0を渡す」<br />-->
+					<!--</p>-->
+					<!--<h4>HOGE</h4>-->
+					<!--<p>-->
+						<!--「\( (g \ 1) \)がTRUEなら\( (&lambda;u . SUCC \ (g \ k)) \)、FALSE(すなわち0)なら\(k\)」<br />-->
+						<!--「\( (&lambda;u . SUCC \ (g \ k)) \)」は「引数を無視して\((g \ k)+1\)を返す」関数だから、kも似たようなものと推測できる。<br />-->
+					<!--</p>-->
+				<!--</div>-->
+				<div class="slide">
+					<p>
+						&lambda;でプログラミング、パズル要素が多いのでお暇な人はいかがでしょう。<br />
+						<small>まあ、これから紹介するSKIコンビネータの方がパズルっぽいですが</small>
+					</p>
+				</div>
+			</section>
+
+			<section class="slide">
+				<h1>SKIで遊ぼう！</h1>
+			</section>
+			<section class="slide">
+				<h2>&lambda;抽象</h2>
+				<p>
+					今更ですが、今まで「式」と呼んでいたやつを「&lambda;項」、
+					「関数」と呼んでいた「\( (&lambda;x . FOO) \)」みたいなのを<strong>&lambda;抽象</strong>と呼びます
+				</p>
+				<div class="slide">
+					<h2>コンビネータ</h2>
+					<p>
+						今まで出てきた&lambda;抽象は全部、「グローバル変数」や「定義済みの定数」(つまり自由変数)を使わない形に書き換えられることに気付きましたか？<br />
+						これらを「<strong>コンビネータ</strong>」(日本語では「閉項(closed term)」が近い？)といいます:
+					</p>
+					<ul>
+						<li>
+							(&lambda;引数たち . (引数たちだけで構成された式))<br />はコンビネータ
+						</li>
+						<li>
+							(&lambda;引数たち . (引数たちとコンビネータだけで構成された式))<br />もコンビネータ
+						</li>
+						<li>
+							以上にあてはまるものだけがコンビネータである。
+						</li>
+					</ul>
+					<div class="slide">
+						<blockquote class="border">
+							コンビネータ論理は、モイセイ・シェインフィンケリと<span class="underline">ハスケル・カリー</span>によって、記号論理での変数を消去するために導入された記法である。<br />
+							最近では、計算機科学において計算の理論的モデルで利用されてきている。また、関数型プログラミング言語の基礎にもなっている。<br />
+							<div style="text-align:right">
+								<small><a href="http://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%93%E3%83%8D%E3%83%BC%E3%82%BF%E8%AB%96%E7%90%86">コンビネータ論理 - Wikipedia</a>より</small>
+							</div>
+						</blockquote>
+						<p>→Haskell Curryすごい！！ (小並感)</p>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>SKIコンビネータ</h2>
+				<p>
+					実は、<strong>3種類のコンビネータ</strong>(S, K, I)</strong>だけでチューリング完全</strong>であることがわかっている！
+				</p>
+				<ul>
+					<li>
+						\( S := (&lambda;xyz . x \ z \ (y \ z)) \)
+					</li>
+					<li>
+						\( K := (&lambda;xy . x) \)
+					</li>
+					<li>
+						\( I := (&lambda;x . x) \)
+					</li>
+				</ul>
+				<p>これだけ。</p>
+				<div class="slide">
+					<p>
+						とはいえ、定義だけ見ても意味がわからない……<br />
+						イメージとしては:
+					</p>
+					<ul>
+						<li>
+							Sabc &rarr; ac(bc)<br />
+							S: 引数を複製、後ろでの結合
+						</li>
+						<li>
+							Kab &rarr; a<br />
+							K: 引数を無視(削除)
+						</li>
+						<li>
+							Ia &rarr; a<br />
+							I: 何もしない(恒等写像、id)。ダミー用
+						</li>
+					</ul>
+					<p class="slide">
+						実際のところ、
+						\( SKK = (&lambda;xyz . x \ z \ (y \ z)) (&lambda;xy . x) (&lambda;xy . x) \)<br />
+						\( &rarr;_&beta; (&lambda;yz . (&lambda;xy . x) \ z \ (y \ z)) (&lambda;xy . x) \)<br />
+						\( &rarr;_&beta; (&lambda;yz . z) (&lambda;xy . x) \)<br />
+						\( &rarr;_&beta; (&lambda;z . z) \)<br />
+						\( = I \)<br />
+						なので、3種類というより<strong>2種類</strong>で済む。
+					</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>SKIコンビネータがチューリング完全という話</h2>
+				<p>
+					&lambda;項をSKIコンビネータだけを使った式に変換するアルゴリズムがある<br />
+					→そのアルゴリズムであらゆる&lambda;項がSKIコンビネータに置き換えられる<br />
+					→SKIコンビネータも当然チューリング完全
+				</p>
+				<div class="slide">
+					<h3>余談: SKIコンビネータ手打ち</h3>
+					<h4>PREDの実装:</h4>
+					<p>
+						``s``s`ks``s`k`s`ks``s``s`ks``s`k`s`k``s`ksk``s``s`ksk`k``s`k`s`k`si``s`k`s`kk``s`k`sik`k`kk`k`k`ki<br />
+						→自動生成されたやつ(unlambda記法という文法を使っているが、中身は普通にSKIの関数適用)
+					</p>
+					<div class="slide">
+						<p>
+							``s`k`s`k`s`k``si`ki``s`k``s``s`ks``s`kks`kk``s`k``s``s`ksk`k``s`kkk``si`k``s`k`s`k``s`k`sik``ss`ki<br />
+							→頭をひねって作ったやつ(<strong>手打ちの温かみ</strong>がある)<br />
+							ちなみに、さっきの無限リストを使ったやり方。長さは自動生成のと同じだった。
+						</p>
+						<p class="slide">
+							変換アルゴリズムは結構文字数が増える感じなので、人間の手打ちでも勝負になる
+							(単純なものほど顕著に差が出る)
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>SKIコンビネータでの遊び方</h2>
+				<h3>0. 0と1の表現を確認する。</h3>
+				<p>
+					0 := (&lambda;fx . x)<br />
+					0 a b &rarr;<sub>&beta;</sub> b<br />
+					→(0 a) が Iになれば 0 a b &rarr;<sub>&beta;</sub> I b &rarr;<sub>&beta;</sub> b だ……<br />
+					→aを「無視」したいので<strong>K</strong>を使う。<br />
+					0 a &rarr;<sub>&beta;</sub> K I a &rarr;<sub>&beta;</sub> I<br />
+					完成！<br />
+					<strong>0 := K I</strong>
+				</p>
+				<p>
+					1 := (&lambda;fx . fx) = I<br />
+					↑ I = (&lambda;x . x) で1とはちょっと(型も)違うけど……<br />
+					1 a b &rarr;<sub>&beta;</sub> a b<br />
+					I a b = (I a) b &rarr;<sub>&beta;</sub> a b<br />
+					引数を与えれば全く同じ挙動するし、同一視していいよね！<br />
+					→これを「&eta;変換」という。
+					<strong>1 := I</strong>
+				</p>
+			</section>
+			<section class="slide">
+				<h2>SKIコンビネータでの遊び方</h2>
+				<h3>1. 2を作る。</h3>
+				<p>
+					SUCC = a としよう。<br />
+					a f x &rarr;<sub>&beta;</sub> f (f x)<br />
+					fが2つになるので、複製の「S」が必要っぽい<br />
+					a = S b cとする。<br />
+					S b c f x &rarr; b f (c f) x<br />
+					<strong>後ろのfとxを結合</strong>したいので、b = Sとしてみる。<br />
+					S f (c f) x &rarr; f x (c f x)<br />
+					→不要なxが結合してしまった。はがせないので駄目。b = S dとして再挑戦。<br />
+					S d f (c f) x &rarr; d (c f) f (c f) x<br />
+					まだ無理っぽい？b = S d eとして再挑戦。<br />
+					S d e f (c f) x &rarr; d f (e f) (c f) x<br />
+					これならd,e,fを弄って不要なfを消せそう。<br />
+					(c f)とxがSの第2・第3引数になってほしいので、d f = Sとする(つまりd = KS。このときd f = K S f &rarr;S)。<br />
+					S (e f) (c f) x &rarr; e f x (c f x)<br />
+					e f x = f、c f x = f xとなればf (f x)の出来上がり。<br />
+					つまりe = K、c = I。<br />
+					結局、a = S b c = S (S d e) I = S (S (K S) K) I<br />
+					<strong>2 := S(S(KS)K)I</strong>
+				</p>
+				<div class="slide">
+					<h3>2. SUCCを作る。</h3>
+					<p>
+						お気付きだろうか。上のやつでc = Iと置かずに放置すると<br />
+						S(S(KS)K)c f x &rarr; f (c f x)<br />
+						になることを……
+					</p>
+					<p class="slide">
+						<strong>SUCC := S(S(KS)K)</strong>
+					</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>SKIコンビネータでの遊び方</h2>
+				<p>
+					こんな感じで、「増やす」「後ろの方を括弧で結合する」「減らす」を意識しながらSKIコンビネータで様々な関数を作っていきましょう。
+				</p>
+				<h3>次の目標: 反転</h3>
+				<p>
+					R a b &rarr; b a<br />
+					となるようなRを見付けよう。
+				</p>
+				<div class="slide">
+					<h3>その次の目標: BCKWコンビネータ</h3>
+					<ul>
+						<li>
+							Bxyz &rarr; x(yz)<br />
+							後ろでの結合
+						</li>
+						<li>
+							Cxyz &rarr; xzy<br />
+							後ろでの入れ替え
+						</li>
+						<li>
+							Wxy &rarr; xyy<br />
+							複製
+						</li>
+					</ul>
+					<p>
+						実はBCKWシステム(BCKWコンビネータだけを使った表現)でも<strong>チューリング完全</strong>！<br />
+						→SKIとBCKWはそれぞれのコンビネータを互いの表現で書き換えられる<br />
+						<small>ちなみにこれもHaskell Curryが発見</small>
+					</p>
+					<div class="slide">
+						<p>
+							あとはPLUS、MULT、真偽値やCONS、PREDなどを作りましょう<br />
+							(ただしPREDはかなり難しい)
+						</p>
+						<p>
+							<small>この辺りの具体的な試行錯誤のやり方は<a href="http://www.paraiso-lang.org/ikmsm/books/c80.html">『簡約！λカ娘」1巻</a>の第1章などが詳しい。</small>
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>不動点コンビネータ</h2>
+				<p>
+					不動点: f(x) = x となるような点x<br />
+					引数と結果が同じになる。<br />
+					(たとえば\( f(x) = x^2 \)の不動点はx=0とx=1)
+				</p>
+				<p>Q. 「不動点を求める関数(コンビネータ)」は作れるか？</p>
+				<div class="slide">
+					<p>
+						A. Yes<br />
+						f (g f) = g f<br />
+						となるような関数gを&lambda;抽象で表現できる。<br />
+						これを「<strong>不動点コンビネータ</strong>」という。
+					</p>
+					<div class="slide">
+						<p><strong>f (g f) = g f</strong></p>
+						<div class="slide">
+							<p>
+								<span class="strong">分かる気がする。<strong>逆に言うと</strong>……</span>
+							</p>
+							<p>
+								g f = f (g f)<br />
+								= f (f (g f)) = f (f (f (g f))) = …<br />
+								↑<strong>再帰</strong>じゃん
+							</p>
+							<p class="slide">
+								不動点コンビネータを使うことで、無名再帰も超簡単に書ける
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>Yコンビネータ</h2>
+				<p>
+					中でも一番有名なのが<strong>Yコンビネータ</strong>。
+					Y = (&lambda;f . (&lambda;x . f (x x)) (&lambda;x . f (x x)))<br />
+					SKIコンビネータでは、<br />
+					Y = S (K (S I I)) (S (S (K S) K) (K (S I I)))<br />
+					<small>
+						例のごとく、これもHaskell Curryが発見！<br />
+						Curryに"圧倒的感謝"🙏🙏😄😄
+					</small>
+				</p>
+				<h2>他にもたくさん</h2>
+				<p>
+					Zコンビネータ、チューリング不動点コンビネータ、etc...<br />
+					中にはこんなものも。<br />
+					<div class="border">
+						Y<sub>k</sub> = (L L L L L L L L L L L L L L L L L L L L L L L L L L)<br />
+						ただし<br />
+						L = (&lambda;abcdefghijklmnopqstuvwxyzr. (r (t h i s i s a f i x e d p o i n t c o m b i n a t o r)))<br />
+					</div>
+				</p>
+			</section>
+			<section class="slide">
+				<h2>SKIコンビネータを実用的に使いたい人へ</h2>
+				<h3>unlambda</h3>
+				<p>
+					<strong>unlambda</strong>という言語でSKIコンビネータが使える。<br />
+					unlambda記法(「fをxに適用」を「`fx」と書く記法)によって、括弧を不要とし、文字数を短縮した。<br />
+					文字の表示とかもできる。わお実用的！
+				</p>
+				<div class="slide">
+					<h3>Lazy K</h3>
+					<p>
+						純粋関数型言語。入出力は標準入力と標準出力しか使えない。<br />
+						SKIコンビネータ(普通の記法とunlambda記法の両方)、Iota、Jotが使える。
+					</p>
+					<div class="slide">
+						<h3>Iota</h3>
+						<p>
+							すごい人「SコンビネータとKコンビネータ合体できたらもっと少ない種類の文字でプログラミングできるよな……」<br />
+							すごい人「できた」<br />
+						</p>
+						<p>
+							<strong>&iota; = (&lambda;x . xSK)</strong><br />
+							I = &iota;&iota;、 K = &iota;(&iota;(&iota;&iota;))、 S = &iota;(&iota;(&iota;(&iota;&iota;)))<br />
+							↑SとKとIが作れたのでチューリング完全。
+							これなら関数適用の演算子と&iota;の2種類だけでチューリング完全なプログラムが作れる！！
+						</p>
+						<div class="slide">
+							<h3>Jot</h3>
+<tbody><tr><td><center><b>Jot</b></center></td></tr>
+<tr><td>
+<table>
+<tbody><tr><td>Syntax:</td><td>Semantics:</td></tr>
+<tr></tr>
+<tr><td>F --&gt; e</td><td><code>^x.x</code></td></tr>
+<tr><td>F --&gt; F&nbsp;&nbsp;<b>0</b></td><td><code>[F]SK</code></td></tr>
+<tr><td>F --&gt; F&nbsp;&nbsp;<b>1</b></td><td><code>^xy.[F](xy)</code></td></tr>
+</tbody></table>
+</td></tr>
+</tbody>
+<small><a href="http://semarch.linguistics.fas.nyu.edu/barker/Iota/">Iota and Jot: the simplest languages?</a>より引用</small>
+							<p>
+								いろいろ弄る(詳細は略)と、「任意の長さのあらゆるビット列が正当なプログラムとなる」ようなチューリング完全な言語が作れる<br />
+								→<strong>あらゆるプログラムに一意に番号を付ける</strong>ことができる(<a href="http://ja.wikipedia.org/wiki/%E3%82%B2%E3%83%BC%E3%83%87%E3%83%AB%E6%95%B0">ゲーデル数</a>)
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="slide">
+				<h1>"実用"言語の&lambda;</h1>
+			</section>
+			<section class="slide">
+				<h2>C++の&lambda;</h2>
+				<pre><code>template &lt;typename T1, typename T2&gt;
+auto add1(const T1 &amp;x, const T2 &amp;y) {
+    return x + y;
+}
+// add1(3, 2) =&gt; 5
+/*
+ * 本当は
+add1(T1 &amp;&amp;x, T2 &amp;&amp;y) {
+    return std::forward&lt;decltype(x))&gt;(x) + std::forward&lt;decltype(y))&gt;(y);
+}
+ * のようにするのが良いが……
+ */
+
+auto add2 = [](const auto &amp;x, const auto &amp;y) {
+    return x + y;
+};
+// add2(3, 2) =&gt; 5
+</code></pre>
+			</section>
+			<section class="slide">
+				<h2>ンン？</h2>
+				<pre><code>auto add2 = [](const auto &amp;x, const auto &amp;y) {
+    return x + y;
+};</code></pre>
+					<p>これって</p>
+					<pre><code>struct anonymous__add_lambda_ { // コンパイラ以外が使えない名前
+    template &lt;typename T1, typename T2&gt;
+    auto operator()(const T1 &amp;x, const T2 &amp;y) {
+      return x+y;
+    }
+};</code></pre>
+				<p>だよな？普通のメンバ関数呼び出しじゃん</p>
+				<p class="slide">
+					<strong>CPUの声が聞こえる……</strong>
+				</p>
+			</section>
+
+			<section class="slide">
+				<h2>CPUの声</h2>
+				<ul>
+					<li>アセンブリ言語等の原始的な手続き型言語やC/C++のユーザから見れば、「関数」は「メモリ上に配置された機械語命令の羅列」でしかない</li>
+					<li>実際、「関数を渡す」のではなく「関数ポインタ(アドレス)を渡す」という動作になる</li>
+				</ul>
+				<div class="slide">
+					<h3>「関数が機械語命令の羅列」とは、こういうこと</h3>
+					<ul>
+						<li>
+							<p>0x90はx86ではNOPだから……</p>
+							<pre><code>__attribute((section(".text"))) int main = 0x90909090;
+void f1() { puts("world!"); }
+__attribute((constructor)) void f2() { puts("hello"); }</code></pre>
+							<p><a href="http://d.hatena.ne.jp/yupo5656/20060828/p1">mainを一度も呼ばないばかりか蹂躙する - memologue</a></p>
+						</li>
+						<li>
+							<p>関数は機械語バイナリの配列だから……</p>
+							<pre><code>qsort(array, size, 4, "YXZQQQ\x8b\0+\x02\xc3");</code></pre>
+							<p>qsortの第4引数は本来関数ポインタを渡すところ。</p>
+							<p><a href="http://shinh.skr.jp/dat_dir/golf_prosym.pdf">Code Golf [PDF]</a> (7ページ目)</p>
+						</li>
+					</ul>
+				</div>
+				<div class="slide">
+					<h2>もっと数学寄りの「関数」を</h2>
+					<ul>
+						<li>HaskellやLispでは、関数そのもの(ポインタではない)もオブジェクトであり、別の関数に渡したり、実行時に合成して作ったりできる</li>
+						<li>副作用(後述)の無い処理なら、数学の「関数」っぽい何かとして扱ってもよくない？</li>
+						<li>ノイマン型コンピュータ専用でない言語で「計算」を表現したい</li>
+					</ul>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>副作用と関数の型</h2>
+				<h3>純粋(pure)、副作用(side effect)とは</h3>
+				<ul>
+					<li>関数の戻り値が常に引数のみから定まるとき、関数は<strong>純粋</strong>であるという</li>
+					<li>関数の戻り値が引数のみからは定まらないとき(内部や外部に"状態"を持っているとき)、関数は<strong>純粋でない</strong></li>
+					<li>関数が何らかの"状態"を変更するとき、関数は<strong>副作用をもつ</strong>という。
+						また、この状態を変更する作用を<strong>副作用</strong>という</li>
+				</ul>
+				<div class="section">
+					<h4>例</h4>
+					<ul>
+						<li>現在時刻を返す関数(<code>time()</code>など)は純粋でない(副作用の有無は実装依存)。</li>
+						<li>処理「<code>i = i+1</code>」は副作用がある。</li>
+						<li>「文字列を画面に表示する」処理には副作用がある(ディスプレイの表示という"状態"を変化させる)。</li>
+					</ul>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>純粋であること、副作用が無いこと</h2>
+				<h3>純粋で副作用が無いと何が良いのか？</h3>
+				<ul>
+					<li>引数の評価の順番が自由<ul>
+							<li>たとえば
+								<pre><code>int i = 3;
+printf("%d, %d", ++i, i);</code></pre>
+								はどのような出力をするだろうか。
+								<code>++i</code>が<code>i</code>より先に評価(計算)されれば出力は「4, 4」になるだろうし、逆であれば「4, 3」になるかもしれない。
+								(実際は処理系依存。)
+							</li>
+							<li>
+								純粋で副作用が無いと、どの部分式から計算しても(計算が停止したなら)<strong>必ず同じ結果になる</strong>(チャーチ・ロッサーの定理)<br />
+								例: &lambda;抽象の\(PLUS\)<br />
+								\( PLUS \ 3 \ 2 \ f \ x \)<br />
+								\( &rarr;_&beta; \cdots &rarr;_&beta; 3 \ f \ (2 \ f \ x) \)<br />
+								外から先に計算すると<br />
+								\( &rarr;_&beta; f \ (f \ (f \ (2 \ f \ x))) \)<br />
+								\( &rarr;_&beta; f \ (f \ (f \ (f \ (f \ x)))) \)<br />
+								中から先に計算しても<br />
+								\( &rarr;_&beta; 3 \ f \ (f \ (f \ x)) \)<br />
+								\( &rarr;_&beta; f \ (f \ (f \ (f \ (f \ x)))) \)<br />
+							</li>
+							<li>
+								<strong>遅延評価</strong>(<strong>非正格評価</strong>)ができる<br />
+								→「部分式を、必要になるまで計算せずにおく(不要だったら最後まで計算しない)」ことができる
+							</li>
+					</ul></li>
+				</ul>
+			</section>
+			<section class="slide">
+				<h2>非正格評価</h2>
+				<p>
+					\( f(x) = x^2 \)<br />
+					について、 \( f(3+2) \)を考える。
+				</p>
+				<div class="slide">
+					<p>
+						<h3>正格評価の場合</h3>
+						<p>
+							\( f(2+3) &rarr; f(5) &rarr; 5^2 &rarr; 5 \times 5 &rarr; 25 \)
+						</p>
+						<p>
+							引数(部分式)を先に評価。
+							多くの言語で一般的な評価戦略。
+						</p>
+						<div class="slide">
+							<h3>非正格評価の場合</h3>
+							<p>
+								\( f(2+3) &rarr; (2+3)^2 &rarr; (2+3) \times (2+3) &rarr; 5 \times 5 &rarr; 25 \)
+							</p>
+							<div class="slide">
+								<p>
+									→if-then-elseなどに関わる部分では部分式(や引数の一部)が無駄になることが多い。<br />
+									必要になるまで部分式の評価を保留できるのは非常に良い。<br />
+									うまくやれば無限リスト等が活用できる。
+								</p>
+								<div class="slide">
+									<pre><code>-- Haskell
+take 10 <strong>[1..]</strong>
+-- =&gt; [1,2,3,4,5,6,7,8,9,10]
+-- 11以降の不要な部分はそもそも計算されなかった</code></pre>
+								</div>
+							</div>
+						</div>
+					</p>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>純粋であること、副作用が無いこと</h2>
+				<h3>純粋で副作用が無いと何が良いのか？</h3>
+				<ul>
+					<li>引数の評価の順番が自由</li>
+					<li>
+						計算が依存している情報が明確(引数だけ)なので、デバッグやテストがしやすい。<br />
+						「環境」を考慮する必要がない
+						<ul>
+							<li>
+								HaskellはI/Oなどをモナドとして純粋な部分と分離することで、入出力を可能にしつつ純粋な関数を書くメリットを享受できるようになっている。
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="slide">
+				<h2>「関数型」の何が良いのか</h2>
+				<div class="slide">
+					<h3>高階関数による高度な抽象化</h3>
+					<p>
+						foldr (reduce), map, filter等は「関数とリストを受け取っていろいろ計算する」関数。<br />
+						もちろんループや再帰でも書けるが、より<strong>意味が明確になるように抽象化</strong>されている。
+					</p>
+					<p>
+						<small>
+							強力すぎる再帰(ループ)よりもfoldr,map,filterのように意味が明確な抽象化が好まれるのは、強力で原始的なgotoより意味の明確なwhileやifや関数が好まれるのと同じこと。
+						</small>
+					</p>
+					<div class="slide">
+						<h3>木構造が見える</h3>
+						<p>
+							関数型言語では関数と値が(構文上では)平等なので、どうしても「適用される何か」と「適用する何か」を「適用」で繋ぐ、という構造になる。<br />
+							→構文木がはっきり見えて、それが計算と密接に関係している。<br />
+							(純粋な計算であれば)全ての部分木には値がある
+						</p>
+						<div class="slide">
+							<h3>CPUの声が聞こえない</h3>
+							<p>
+								抽象化が高度なため、計算機のアーキテクチャ(特に「ノイマン型」「ハーバード型」の軛)から独立して考えられる。<br />
+								たとえば並列化あたりなどは作りやすいらしい……？<br />
+								<small>ただし高速化は普通の手続き型言語とは違った難しさがある</small>
+							</p>
+							<div class="slide">
+								<h3>世界が広がる</h3>
+								<p>
+									手続き型言語とは根本的に考え方が異なるので、視野が広がる(とても)
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<h2>なお、最近の言語では</h2>
+				<p>
+					<strong>マルチパラダイム</strong>な言語が多くなっている。<br />
+					C++, D, Ruby, etc...
+				</p>
+				<p>
+					C++でも関数オブジェクトやlambdaが(CPUの声が聞こえるとはいえ)使えるようになっていたり(或いは<a href="http://ja.wikipedia.org/wiki/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%83%A1%E3%82%BF%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0">TMP</a>できたり)、
+					Rubyもオブジェクト指向といいつつ関数までオブジェクトとして扱えたり、
+					関数型言語らしい処理を書ける言語は多い。
+				</p>
+			</section>
+			<section class="slide">
+				<h2>まとめ</h2>
+				<ul>
+					<li>
+						「ラムダ」は「計算」という概念をコンピュータの仕組みに依存しない方法で抽象化したもの。<br />
+						(むしろ&lambda;抽象で書けることこそが「計算」である？)
+					</li>
+					<li>
+						関数型言語おもしろいね！<br />
+						(おもしろいだけでなく、メリットもある)
+					</li>
+					<li>
+						brainf*ckより過激な世界がある<br />
+						SKIコンビネータ楽しい✌ ('ω' ✌ )三 ✌ ('ω') ✌ 三( ✌ 'ω') ✌
+					</li>
+					<li>
+						これから関数型言語を勉強した人が「あ、これ知ってる概念だ」となればうれしい
+					</li>
+				</ul>
+			</section>
+
+			<section class="slide">
+				<h2>おまけ：何故「λ」なのか(文字通りの意味で)</h2>
+				<style>
+#lambda-styles td {
+	border:1.5pt solid blue;
+}
+/* 列幅を等間隔に */
+#lambda-styles {
+	table-layout:fixed;
+	width:100%;
+}
+				</style>
+				<table id="lambda-styles">
+					<tr>
+						<td>
+							<div style="font-family:'doulos'; font-size:300%; text-align:center"><span>x&#x302;.x</span></div>
+							<p>WhiteheadとRusselが説明した要件</p>
+						</td>
+						<td>
+							<div style="font-family:'doulos'; font-size:300%; text-align:center"><span>^x.x</span></div>
+							<p>Churchの理解</p>
+						</td>
+						<td>
+							<div style="font-family:'doulos'; font-size:300%; text-align:center"><span>Λx.x</span></div>
+							<p>Churchの設計</p>
+						</td>
+						<td>
+							<div style="font-family:'doulos'; font-size:300%; text-align:center"><span>λx.x</span></div>
+							<p>Churchのコード</p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div style="font-family:monospace; margin-bottom:1em;"><pre><code>\x -&gt; x</code></pre></div>
+							<p>実際の運用(Haskell)</p>
+						</td>
+						<td colspan="2">
+							<div style="font-family:monospace; margin-bottom:1em;"><pre><code>(lambda (x) x)</code></pre></div>
+							<p>実際の運用(Scheme)</p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div style="font-family:monospace; margin-bottom:1em;"><pre><code>function(x){return x;}</code></pre></div>
+							<p>実際の運用(javascript)</p>
+						</td>
+						<td colspan="2">
+							<div style="font-family:monospace; margin-bottom:1em;"><pre><code>[](auto x){return x;}</code></pre></div>
+							<p>実際の運用(C++)</p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" style="text-align:center">
+							<div style="font-family:'doulos'; font-size:600%">x&#x302;.x</div>
+							<p>顧客(?)が本当に必要だったもの</p>
+						</td>
+					</tr>
+				</table>
+				<p style="margin-top:0.5em">ちなみに<span style="font-family:'doulos'">x&#x302;</span>は、Doulosなど文字の合成によく対応したフォントでないとうまく描画できない。<br />
+				普通にやると<span>x&#x302;</span>&nbsp;&nbsp;&nbsp;&nbsp;のようになる。
+				<img src="images/tree_business.jpg" alt="" style="max-height:3em; vertical-align:top" /></p>
+			</section>
+
+			<section class="slide">
+				<h2>参考文献</h2>
+				<ul>
+					<li><a href="http://math.stackexchange.com/questions/64468/why-is-lambda-calculus-named-after-that-specific-greek-letter-why-not-rho-calc">Why is lambda calculus named after that specific Greek letter? Why not “rho calculus”, for example?</a></li>
+					<li><a href="http://rainyday.blog.so-net.ne.jp/2007-02-21">ラムダ文字の由来　[Haskell]</a></li>
+					<li><a href="http://d.hatena.ne.jp/gintenlabo/20130516/1368711542">C++14 のラムダ式 完全解説 前編</a></li>
+					<li>Wikipedia</li>
+					<li><a href="http://semarch.linguistics.fas.nyu.edu/barker/Iota/">Iota and Jot: the simplest languages?</a></li>
+					<li><a href="http://lambda.bugyo.tk/cdr/mwl/">マンガで分かるLisp(Manga Guide to Lisp)</a></li>
+					<li><a href="http://homepages.cwi.nl/~tromp/cl/LC.pdf">Binary Lambda Calculus and Combinatory Logic</a> (リンク切れ)</li>
+					<li><a href="http://www.paraiso-lang.org/ikmsm/books/c80.html">『簡約！λカ娘」1巻</a></li>
+				</ul>
+			</section>
+
+			<!-- End slides. -->
+
+			<!-- Begin extension snippets. Add or remove as needed. -->
+
+			<!-- deck.navigation snippet -->
+			<div aria-role="navigation">
+				<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+				<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+			</div>
+
+			<!-- deck.status snippet -->
+			<p class="deck-status" aria-role="status">
+			<span class="deck-status-current"></span>
+			/
+			<span class="deck-status-total"></span>
+			</p>
+
+			<!-- deck.goto snippet -->
+			<form action="." method="get" class="goto-form">
+				<label for="goto-slide">Go to slide:</label>
+				<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+				<datalist id="goto-datalist"></datalist>
+				<input type="submit" value="Go">
+			</form>
+
+			<!-- End extension snippets. -->
+		</div>
+
+		<!-- Required JS files. -->
+		<script src="jquery.min.js"></script>
+		<script src="core/deck.core.js"></script>
+
+		<!-- Extension JS files. Add or remove as needed. -->
+		<script src="extensions/menu/deck.menu.js"></script>
+		<script src="extensions/goto/deck.goto.js"></script>
+		<script src="extensions/status/deck.status.js"></script>
+		<script src="extensions/navigation/deck.navigation.js"></script>
+		<script src="extensions/scale/deck.scale.js"></script>
+
+		<!-- Initialize the deck. You can put this in an external file if desired. -->
+		<script>
+$(function() {
+	$.deck('.slide');
+});
+		</script>
+	</body>
+</html>
+<!-- vim: set shiftwidth=2 tabstop=2 softtabstop=2 : -->
